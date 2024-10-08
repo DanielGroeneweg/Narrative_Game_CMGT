@@ -1,0 +1,47 @@
+﻿title: Start
+---
+<<declare $quest = "unassigned">>
+<<declare $turretState = "active">>
+<<declare $cellDoorOpened = false>>
+===
+
+title: TurretDisabled
+---
+<<if $turretState == "active">>
+    Turret Has Been Successfully Disabled!
+    <<set $turretState to "disabled">>
+<<endif>>
+===
+
+title: WrongCode
+---
+<<if $turretState == "active">>
+That code seems to be wrong!
+<<endif>>
+===
+
+title: DiedToTurret
+---
+The turret killed you!
+Try to find a way to disable it!
+===
+
+title: CellDoor
+---
+<<if not has_item ("Player", "CellKey")>>
+    <<if $cellDoorOpened == false>>
+        The door is closed!
+        Try to find a way to pick the lock!
+    <<endif>>
+<<else>>
+    <<play_animation "Pivot" "OpenDoorAnimation" false>>
+    <<take_item "Player" "CellKey">>
+    <<set $cellDoorOpened to true>>
+<<endif>>
+===
+title: BobbyPinsFound
+---
+You found some bobbypins!
+Maybe you can use these to open the cell door!
+<<give_item "Player" "CellKey">>
+===
