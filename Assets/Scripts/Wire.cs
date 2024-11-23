@@ -9,20 +9,28 @@ public class Wire : MonoBehaviour
 {
     public Image wireEnd;
     Vector3 startPoint;
+    Vector2 startSize;
     private bool isDragging = false;
 
     private void Start()
     {
         startPoint = wireEnd.rectTransform.position;
+        startSize = wireEnd.rectTransform.sizeDelta;
     }
 
     private void Update()
     {
         if (!isDragging && Input.GetMouseButtonDown(0) && IsPointerOverUIElement()) isDragging = true;
 
-        if (isDragging)
+        else if (isDragging)
         {
+            MoveWire();
             StretchWire();
+            if (Input.GetMouseButtonDown(0))
+            {
+                isDragging = false;
+                 
+            }
         }
     }
 
@@ -54,7 +62,7 @@ public class Wire : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raysastResults);
         return raysastResults;
     }
-    private void StretchWire()
+    private void MoveWire()
     {
         // Reset the position
         transform.position = startPoint;
@@ -62,10 +70,11 @@ public class Wire : MonoBehaviour
         // Get the mouse input
         Vector3 mouse = Input.mousePosition;
         mouse.z = 0;
+        mouse.y = transform.position.y;
 
         // Set the rotation to look at the mouse
         wireEnd.rectTransform.LookAt(mouse);
-        var rotation = wireEnd.rectTransform.rotation;
+        Quaternion rotation = wireEnd.rectTransform.rotation;
         rotation = new Quaternion(0, 0, -rotation.x, 1);
         wireEnd.rectTransform.rotation = rotation;
 
@@ -75,9 +84,22 @@ public class Wire : MonoBehaviour
         // Set the position to the mouse
         Vector3 newPosition = mouse;
         transform.position = newPosition;
-
-        // Resize the wire to so it filles from the start position to the mouse position
-        float dist = Vector2.Distance(startPoint, newPosition);
-        wireEnd.rectTransform.sizeDelta = new Vector2(100 + dist, wireEnd.rectTransform.sizeDelta.y);
     }
+    private void StretchWire()
+    {
+        // Get the mouse input
+        Vector3 mouse = Input.mousePosition;
+        mouse.z = 0;
+        mouse.y = transform.position.y;
+
+        Vector3 newPosition = mouse;
+
+        // Resize the wire to so it fills from the start position to the mouse position
+        float dist = Vector2.Distance(startPoint, newPosition);
+        Vector2 size = startSize;
+        size.x += dist;
+        wireEnd.rectTransform.sizeDelta = size;
+
+        //Debug.Log("distance: " + (dist) + " WireEnd Size Difference: " + (wireEnd.rectTransform.sizeDelta.x - startSize.x));
+    }   
 }
