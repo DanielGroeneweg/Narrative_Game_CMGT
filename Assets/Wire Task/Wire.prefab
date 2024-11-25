@@ -388,5 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fa1048ccb747974ab26bbd22db58d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stretchMin: 100
+  stretchMax: 1200
+  mouseMin: 0
+  mouseMax: 300
   wireEnd: {fileID: 7558705298305179974}
-  rect: {fileID: 6158952487126299031}

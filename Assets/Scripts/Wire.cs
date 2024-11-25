@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class Wire : MonoBehaviour
 {
+    public float stretchMin;
+    public float stretchMax;
+    public float mouseMin;
+    public float mouseMax;
     public Image wireEnd;
     Vector3 startPoint;
     Vector2 startSize;
@@ -70,7 +74,7 @@ public class Wire : MonoBehaviour
         // Get the mouse input
         Vector3 mouse = Input.mousePosition;
         mouse.z = 0;
-        mouse.y = transform.position.y;
+        //mouse.y = transform.position.y;
 
         // Set the rotation to look at the mouse
         wireEnd.rectTransform.LookAt(mouse);
@@ -90,16 +94,27 @@ public class Wire : MonoBehaviour
         // Get the mouse input
         Vector3 mouse = Input.mousePosition;
         mouse.z = 0;
-        mouse.y = transform.position.y;
+        //mouse.y = transform.position.y;
 
         Vector3 newPosition = mouse;
 
-        // Resize the wire to so it fills from the start position to the mouse position
+        // Get some variables for the stretching
         float dist = Vector2.Distance(startPoint, newPosition);
+        if (dist < mouseMin) dist = mouseMin;
+        if (dist > mouseMax) dist = mouseMax;
+
+        // Get the percentage of the mouse position regarding how far it is to the max.
+        float distPercentile = dist / mouseMax;
+
+        // Check how much the wire needs to stretch to match the mouse position percentage.
+        float stretchDiff = stretchMax - stretchMin;
+        float stretch = stretchDiff * distPercentile;
+
+        // Stretch the wire
         Vector2 size = startSize;
-        size.x += dist;
+        size.x += stretch;
         wireEnd.rectTransform.sizeDelta = size;
 
-        //Debug.Log("distance: " + (dist) + " WireEnd Size Difference: " + (wireEnd.rectTransform.sizeDelta.x - startSize.x));
+        Debug.Log(dist);
     }   
 }
