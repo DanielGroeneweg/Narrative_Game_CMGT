@@ -45,7 +45,8 @@ You found some bobbypins!
 Maybe you can use these to open the cell door!
 <<give_item "Player" "CellKey">>
 ===
-title: Break
+title: DoorFuseBox
 ---
-<<break_with_pickaxe "MyObject">>
+The door seems to be closed.
+Try sabotaging the fuse box to open it!
 ===
