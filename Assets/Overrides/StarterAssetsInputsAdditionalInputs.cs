@@ -17,6 +17,8 @@ namespace StarterAssets
 
 		public UnityEvent OnInventoryButton;
 
+		public float cammodi;
+
 
         public void OnInteract(InputValue value) 
 		{
@@ -52,7 +54,7 @@ namespace StarterAssets
 			}
 			if(cursorInputForLook)
 			{
-				var lookAroundValue = value.Get<Vector2>();
+				var lookAroundValue = cammodi *value.Get<Vector2>();
 				if (lookAroundValue.magnitude < 5.0f) { //input system ftw
 					LookInput(lookAroundValue);
 				}
