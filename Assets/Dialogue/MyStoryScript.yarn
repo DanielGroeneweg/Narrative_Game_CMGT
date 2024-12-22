@@ -3,6 +3,7 @@
 <<declare $quest = "unassigned">>
 <<declare $turretState = "active">>
 <<declare $cellDoorOpened = false>>
+<<declare $cafetariaDoorOpened = false>>
 ===
 
 title: TurretDisabled
@@ -31,17 +32,35 @@ title: CellDoor
 <<if not has_item ("Player", "CellKey")>>
     <<if $cellDoorOpened == false>>
         The door is closed!
-        Try to find a way to pick the lock!
+        I have to try to find a way to pick the lock!
     <<endif>>
 <<else>>
     <<play_animation "Pivot" "OpenDoorAnimation" false>>
     <<take_item "Player" "CellKey">>
     <<set $cellDoorOpened to true>>
+    <<set_enabled_in_unity "CellProximityTrigger" false>>
 <<endif>>
 ===
 title: BobbyPinsFound
 ---
-You found some bobbypins!
-Maybe you can use these to open the cell door!
+Nice, some bobbypins!
+Maybe I can use these to open the cell door!
 <<give_item "Player" "CellKey">>
+===
+title: KeyCardPickedUp
+---
+<<give_item "Player" "KeyCard">>
+<<set_enabled_in_unity "Keycard" false>>
+One of the guards must have left this keycard when evacuating.
+===
+title: CafetariaDoor
+---
+<<if not has_item ("Player", "KeyCard")>>
+    <<if $cafetariaDoorOpened == false>>
+        The door is electronically locked, but maybe I can find a way to open it!
+    <<endif>>
+<<else>>
+    <<play_animation "DoubleDoor" "CafetariaDoor" false>>
+    <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
+<<endif>>
 ===
