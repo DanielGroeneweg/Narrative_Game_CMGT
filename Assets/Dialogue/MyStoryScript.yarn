@@ -64,3 +64,7 @@ title: CafetariaDoor
     <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
 <<endif>>
 ===
+title: BlockedDoor
+---
+The door seems to be blocked from the other side, I have to find another way to the other side!
+===
