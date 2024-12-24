@@ -1,6 +1,5 @@
 ﻿title: Start
 ---
-<<declare $quest = "unassigned">>
 <<declare $turretState = "active">>
 <<declare $cellDoorOpened = false>>
 <<declare $cafetariaDoorOpened = false>>
@@ -62,9 +61,24 @@ title: CafetariaDoor
 <<else>>
     <<play_animation "DoubleDoor" "CafetariaDoor" false>>
     <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
+    <<take_item "Player" "KeyCard">>
 <<endif>>
 ===
 title: BlockedDoor
 ---
 The door seems to be blocked from the other side, I have to find another way to the other side!
 ===
+title: Wrench
+---
+<<give_item "Player" "Wrench">>
+<<set_enabled_in_unity "Wrench" false>>
+This wrench could be used to open the airduct up there!
+===
+title: AirDuct
+---
+<<if has_item ("Player", "Wrench")>>
+    <<take_item "Player" "Wrench">>
+    <<teleport "Player" "SpawnPointAfterVent">>
+    <<set_spawn "Player" "SpawnPointAfterVent">>
+<<endif>>
+=== 

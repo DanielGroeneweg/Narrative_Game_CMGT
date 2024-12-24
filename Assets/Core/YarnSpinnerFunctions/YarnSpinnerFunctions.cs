@@ -352,12 +352,4 @@ public static class YarnSpinnerFunctions
         }
         Debug.LogWarning("UI not found: " + menuName);
     }
-
-    [YarnCommand("break_with_pickaxe")]
-    public static void BreakWithPickaxe(string objectName)
-    {
-        GameObject obj = GameObject.Find(objectName);
-        obj.GetComponent<DestroyThis>().DestroyObject();
-        Debug.Log("object broken using pickaxe.");
-    }
 }
