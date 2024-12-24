@@ -77,8 +77,10 @@ This wrench could be used to open the airduct up there!
 title: AirDuct
 ---
 <<if has_item ("Player", "Wrench")>>
+    Those ventilation shafts sure come in handy when you can crawl through them.
     <<take_item "Player" "Wrench">>
     <<teleport "Player" "SpawnPointAfterVent">>
     <<set_spawn "Player" "SpawnPointAfterVent">>
+    I guess those shelves got blown away by an explosion and blocked the door.
 <<endif>>
 === 
