@@ -1,3 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 public class DisableTurret : MonoBehaviour
-{ public void KillSwitchTurret() { GameObject.Find("Turret").GetComponent<TurretScript>().isActive = false; } }
+{
+    public List<TurretScript> turrets;
+    public void KillSwitchTurret() 
+    {
+        foreach (TurretScript turret in turrets)
+        {
+            turret.isActive = false;
+        }
+    }
+}
