@@ -89,3 +89,17 @@ title: TheEnd
 This rope should be from the rescue team!
 <<load_scene "EndScreen">>
 ===
+title: Intro
+---
+<<set_enabled_in_unity "NewsPaper" true>>
+Yup, that spy is me.
+What they don't know however...
+Is that there will be a rescue team coming.
+They will blow a hole in the facility.
+Causing the guards to evacuate, leaving time for me to escape.
+When this happens I must be fast, they will only give me 5 minutes before leaving.
+<<set_enabled_in_unity "NewsPaper" false>>
+<<set_enabled_in_unity "Explosion" true>>
+<<wait  15>>
+<<load_scene "MyScene">>
+===

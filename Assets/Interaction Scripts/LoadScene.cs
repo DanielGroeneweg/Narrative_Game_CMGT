@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : PlayerActivatable
+public class SceneInitializer : PlayerActivatable
 {
     public string sceneToLoad;
     private bool isReady = true;
