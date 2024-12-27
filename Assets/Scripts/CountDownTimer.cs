@@ -12,6 +12,7 @@ public class CountDownTimer : MonoBehaviour
     public float minutesLeft = 5;
     public float secondsLeft = 0;
     private bool timeLeft = true;
+    private bool timerRunning = true;
 
     private void Start()
     {
@@ -21,26 +22,33 @@ public class CountDownTimer : MonoBehaviour
     }
     private void DoCountDown()
     {
-        if (timeLeft)
+        if (timerRunning)
         {
-            if (minutesLeft <= 0 && secondsLeft <= 0)
+            if (timeLeft)
             {
-                timeLeft = false;
+                if (minutesLeft <= 0 && secondsLeft <= 0)
+                {
+                    timeLeft = false;
+                }
+
+                else if (secondsLeft <= 0)
+                {
+                    minutesLeft -= 1;
+                    secondsLeft += 59;
+                }
+
+                else secondsLeft -= 1;
+
+                if (secondsLeft >= 10) text.text = minutesLeft + ":" + secondsLeft;
+                else text.text = minutesLeft + ":0" + secondsLeft;
             }
-            
-            else if (secondsLeft <= 0)
-            {
-                minutesLeft -= 1;
-                secondsLeft += 59;
-            }
 
-            else secondsLeft -= 1;
-
-            if (secondsLeft >= 10) text.text = minutesLeft + ":" + secondsLeft;
-            else text.text = minutesLeft + ":0" + secondsLeft;
-
+            else TimerRanOut?.Invoke();
         }
+    }
 
-        else TimerRanOut?.Invoke();
+    public void StopTimer()
+    {
+        timerRunning = false;
     }
 }
