@@ -1,94 +1,11 @@
 ﻿title: Start
 ---
+<<declare $quest = "Get out of your cell">>
 <<declare $turretState = "active">>
 <<declare $cellDoorOpened = false>>
 <<declare $cafetariaDoorOpened = false>>
 ===
 
-title: TurretDisabled
----
-<<if $turretState == "active">>
-    Turret Has Been Successfully Disabled!
-    <<set $turretState to "disabled">>
-<<endif>>
-===
-
-title: WrongCode
----
-<<if $turretState == "active">>
-That code seems to be wrong!
-<<endif>>
-===
-
-title: DiedToTurret
----
-The turret killed you!
-Try to find a way to disable it!
-===
-
-title: CellDoor
----
-<<if not has_item ("Player", "CellKey")>>
-    <<if $cellDoorOpened == false>>
-        The door is closed!
-        I have to try to find a way to pick the lock!
-    <<endif>>
-<<else>>
-    <<play_animation "Pivot" "OpenDoorAnimation" false>>
-    <<take_item "Player" "CellKey">>
-    <<set $cellDoorOpened to true>>
-    <<set_enabled_in_unity "CellProximityTrigger" false>>
-<<endif>>
-===
-title: BobbyPinsFound
----
-Nice, some bobbypins!
-Maybe I can use these to open the cell door!
-<<give_item "Player" "CellKey">>
-===
-title: KeyCardPickedUp
----
-<<give_item "Player" "KeyCard">>
-<<set_enabled_in_unity "Keycard" false>>
-One of the guards must have left this keycard when evacuating.
-===
-title: CafetariaDoor
----
-<<if not has_item ("Player", "KeyCard")>>
-    <<if $cafetariaDoorOpened == false>>
-        The door is electronically locked, but maybe I can find a way to open it!
-    <<endif>>
-<<else>>
-    <<play_animation "DoubleDoor" "CafetariaDoor" false>>
-    <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
-    <<take_item "Player" "KeyCard">>
-<<endif>>
-===
-title: BlockedDoor
----
-The door seems to be blocked from the other side, I have to find another way to the other side!
-===
-title: Wrench
----
-<<give_item "Player" "Wrench">>
-<<set_enabled_in_unity "Wrench" false>>
-This wrench could be used to open the airduct up there!
-===
-title: AirDuct
----
-<<if has_item ("Player", "Wrench")>>
-    Those ventilation shafts sure come in handy when you can crawl through them.
-    <<take_item "Player" "Wrench">>
-    <<teleport "Player" "SpawnPointAfterVent">>
-    <<set_spawn "Player" "SpawnPointAfterVent">>
-    I guess those shelves got blown away by an explosion and blocked the door.
-<<endif>>
-===
-title: TheEnd
----
-This rope should be from the rescue team!
-<<load_scene "EndScreen">>
-===
 title: Intro
 ---
 <<set_enabled_in_unity "NewsPaper" true>>
@@ -103,8 +20,110 @@ When this happens I must be fast, they will only give me 5 minutes before leavin
 <<wait  15>>
 <<load_scene "MyScene">>
 ===
+
+title: CellDoor
+---
+<<if not has_item ("Player", "CellKey")>>
+    <<if $cellDoorOpened == false>>
+        The door is closed!
+        I have to try to find a way to pick the lock!
+    <<endif>>
+<<else>>
+    <<set $quest to "Open the door to the cafetaria">>
+    <<play_animation "Pivot" "OpenDoorAnimation" false>>
+    <<take_item "Player" "CellKey">>
+    <<set $cellDoorOpened to true>>
+    <<set_enabled_in_unity "CellProximityTrigger" false>>
+<<endif>>
+===
+
+title: BobbyPinsFound
+---
+Nice, some bobbypins!
+Maybe I can use these to open the cell door!
+<<give_item "Player" "CellKey">>
+===
+
 title: Prisoner
 ---
 Prisoner: Please! Take me with you if you're escaping!
 You: Sorry, but it's everyone for themselves now.
+===
+
+title: CorrectCode
+---
+<<set $quest to "Open the door to the kitchen">>
+===
+
+title: WrongCode
+---
+<<if $turretState == "active">>
+That code seems to be wrong!
+<<endif>>
+===
+
+title: KeyCardPickedUp
+---
+<<give_item "Player" "KeyCard">>
+<<set_enabled_in_unity "Keycard" false>>
+One of the guards must have left this keycard when evacuating.
+===
+
+title: CafetariaDoor
+---
+<<if not has_item ("Player", "KeyCard")>>
+    <<if $cafetariaDoorOpened == false>>
+        The door is electronically locked, but maybe I can find a way to open it!
+    <<endif>>
+<<else>>
+    <<play_animation "DoubleDoor" "CafetariaDoor" false>>
+    <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
+    <<take_item "Player" "KeyCard">>
+    <<set $quest to "Open the door to leave the kitchen">>
+<<endif>>
+===
+
+title: BlockedDoor
+---
+The door seems to be blocked from the other side, I have to find another way to the other side!
+<<set $quest to "Find another way to the other side of the door">>
+===
+title: Wrench
+---
+<<give_item "Player" "Wrench">>
+<<set_enabled_in_unity "Wrench" false>>
+This wrench could be used to open the airduct up there!
+===
+
+title: AirDuct
+---
+<<if has_item ("Player", "Wrench")>>
+    Those ventilation shafts sure come in handy when you can crawl through them.
+    <<take_item "Player" "Wrench">>
+    <<teleport "Player" "SpawnPointAfterVent">>
+    <<set_spawn "Player" "SpawnPointAfterVent">>
+    <<set $quest to "Disable the turrets">>
+    I guess those shelves got blown away by an explosion and blocked the door.
+<<endif>>
+===
+
+title: TurretDisabled
+---
+<<if $turretState == "active">>
+    Turret Has Been Successfully Disabled!
+    <<set $turretState to "disabled">>
+    <<set $quest to "Escape the prison">>
+<<endif>>
+===
+
+title: DiedToTurret
+---
+The turret killed you!
+Try to find a way to disable it!
+===
+
+title: TheEnd
+---
+This rope should be from the rescue team!
+<<load_scene "EndScreen">>
 ===
