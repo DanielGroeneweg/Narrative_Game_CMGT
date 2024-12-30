@@ -103,3 +103,8 @@ When this happens I must be fast, they will only give me 5 minutes before leavin
 <<wait  15>>
 <<load_scene "MyScene">>
 ===
+title: Prisoner
+---
+Prisoner: Please! Take me with you if you're escaping!
+You: Sorry, but it's everyone for themselves now.
+===
