@@ -8,6 +8,8 @@
 
 title: Intro
 ---
+<<play_animation "JailBarImages" "JailBarsBending">>
+<<wait  1>>
 <<set_enabled_in_unity "NewsPaper" true>>
 Yup, that spy is me.
 What they don't know however...
