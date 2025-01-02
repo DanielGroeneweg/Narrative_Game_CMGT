@@ -127,5 +127,5 @@ Try to find a way to disable it!
 title: TheEnd
 ---
 This rope should be from the rescue team!
-<<load_scene "EndScreen">>
+<<load_scene "WinScreen">>
 ===

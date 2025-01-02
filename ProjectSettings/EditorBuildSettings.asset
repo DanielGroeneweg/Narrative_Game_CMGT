@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MyScene.unity
     guid: d4945aa470056ae44b8e3af1afda6e99
   - enabled: 1
-    path: Assets/Scenes/EndScreen.unity
+    path: Assets/Scenes/WinScreen.unity
     guid: 98312524b8df3cc4896b0245990be21c
   - enabled: 1
     path: Assets/Scenes/LoseScreen.unity
