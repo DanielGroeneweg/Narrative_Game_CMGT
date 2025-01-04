@@ -25,15 +25,16 @@ When this happens I must be fast, they will only give me 5 minutes before leavin
 
 title: CellDoor
 ---
-<<if not has_item ("Player", "CellKey")>>
+<<if not has_item ("Player", "Bobbypins")>>
     <<if $cellDoorOpened == false>>
         The door is closed!
-        I have to try to find a way to pick the lock!
+        Where did I hide the bobbypins again?
     <<endif>>
 <<else>>
-    <<set $quest to "Open the door to the cafetaria">>
+    <<set $quest to "Open the door to the cafeteria">>
+    <<set_enabled_in_unity "CellDoorAudio" true>>
     <<play_animation "Pivot" "OpenDoorAnimation" false>>
-    <<take_item "Player" "CellKey">>
+    <<take_item "Player" "Bobbypins">>
     <<set $cellDoorOpened to true>>
     <<set_enabled_in_unity "CellProximityTrigger" false>>
 <<endif>>
@@ -41,9 +42,8 @@ title: CellDoor
 
 title: BobbyPinsFound
 ---
-Nice, some bobbypins!
-Maybe I can use these to open the cell door!
-<<give_item "Player" "CellKey">>
+Nice, now I can use these bobbypins to open the door!
+<<give_item "Player" "Bobbypins">>
 ===
 
 title: Prisoner
@@ -59,8 +59,8 @@ title: CorrectCode
 
 title: WrongCode
 ---
-<<if $turretState == "active">>
-That code seems to be wrong!
+<<if $quest == "Open the door to the cafeteria">>
+    	That code seems to be wrong!
 <<endif>>
 ===
 
@@ -79,7 +79,8 @@ title: CafetariaDoor
     <<endif>>
 <<else>>
     <<play_animation "DoubleDoor" "CafetariaDoor" false>>
-    <<set_enabled_in_unity "CafetariaProximityTrigger" false>>
+    <<set_enabled_in_unity "CafeteriaBeep" true>>
+    <<set_enabled_in_unity "CafeteriaProximityTrigger" false>>
     <<take_item "Player" "KeyCard">>
     <<set $quest to "Open the door to leave the kitchen">>
 <<endif>>
@@ -87,6 +88,7 @@ title: CafetariaDoor
 
 title: BlockedDoor
 ---
+<<set_enabled_in_unity "KitchenBeep" true>>
 The door seems to be blocked from the other side, I have to find another way to the other side!
 <<set $quest to "Find another way to the other side of the door">>
 ===
